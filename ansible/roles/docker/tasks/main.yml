@@ -1,0 +1,69 @@
+---
+# tasks file for docker---
+- name: install dependencies 
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+    state: present
+    update_cache: yes
+
+- name: add GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: add docker repository to apt
+  apt_repository:
+    repo: "deb https://download.docker.com/linux/ubuntu bionic stable"
+    state: present
+    filename: docker
+
+- name: cache update
+  apt:
+    update_cache: yes
+
+- name: install docker
+  apt:
+    name: docker-ce
+    state: present
+
+- name: check if docker is activ
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name:  docker-compose
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/v{{ docker_compose_version }}/docker-compose-Linux-x86_64"
+    dest: /usr/local/bin/docker-compose
+    mode: '0755'
+
+- name: change own, group and permissions
+  ansible.builtin.file:
+    path: /usr/local/bin/docker-compose
+    owner: acel
+    group: acel
+
+- name: version  docker-compose
+  command: docker-compose --version
+  register: docker_compose_version_check
+  changed_when: false
+
+- name: ensure group "docker" exists
+  ansible.builtin.group:
+    name: docker
+    state: present
+
+- name: adding acel to docker group
+  user:
+    name: acel
+    groups: docker
+    append: yes
+
+- debug:
+    msg: "{{ docker_compose_version_check.stdout }}"

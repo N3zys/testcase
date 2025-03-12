@@ -1,0 +1,9 @@
+[local]
+ansible_server ansible_host=192.168.2.114 ansible_user=acel
+
+[remote]
+remote_server ansible_host=192.168.2.112 ansible_user=acel 
+
+[all_servers:children]
+local
+remote
