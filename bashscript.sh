@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Настройки GitLab
-GITLAB_URL="http://192.168.2.112:56080"
-API_TOKEN="your_api_token"
+GITLAB_URL="https://gitlab.nez.lcl"
+API_TOKEN="glft-N-FHf6UBtSTsHhzCyzqT"
 
 # Запрос данных о пользователе из консоли
 echo "Введите данные для нового пользователя:"
@@ -10,9 +10,8 @@ read -p "Имя пользователя (например, John Doe): " USER_NA
 read -p "Email пользователя: " USER_EMAIL
 read -p "Имя пользователя (логин): " USER_USERNAME
 read -sp "Пароль пользователя: " USER_PASSWORD
-echo # Переход на новую строку после ввода пароля
+echo 
 
-# Создание пользователя через GitLab API
 echo "Создание пользователя..."
 RESPONSE=$(curl -s --header "PRIVATE-TOKEN: $API_TOKEN" \
   --request POST "$GITLAB_URL/api/v4/users" \
