@@ -1,0 +1,4 @@
+---
+# defaults file for ./gitlab
+# ---
+gitlab_root_password: "SecurePass123!"
