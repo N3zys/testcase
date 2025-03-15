@@ -1,0 +1,4 @@
+Error connecting: Error while fetching server API version: Not supported URL scheme http+docker
+Решение -> 
+ansible-galaxy collection list community.docker
+ansible-galaxy collection install community.docker --force
