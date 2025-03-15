@@ -1,2 +1,5 @@
 ---
 # vars file for ./gitlab
+gitlab_external_url: "https://gitlab.nez.lcl"
+gitlab_ssl_certificate: "/etc/gitlab/ssl/nez-lcl.crt"
+gitlab_ssl_certificate_key: "/etc/gitlab/ssl/nez-lcl.key"

@@ -10,6 +10,7 @@
     - "/etc/docker/gitlab/config"
     - "/etc/docker/gitlab/logs"
     - "/etc/docker/gitlab/data"
+    - "/etc/docker/gitlab/ssl"
 
 - name: Запуск контейнера GitLab
   docker_container:
@@ -25,12 +26,13 @@
       - /etc/docker/gitlab/config:/etc/gitlab
       - /etc/docker/gitlab/logs:/var/log/gitlab
       - /etc/docker/gitlab/data:/var/opt/gitlab
+      - /etc/docker/gitlab/ssl:/etc/gitlab/ssl
+
     env:
       GITLAB_ROOT_PASSWORD: "{{ gitlab_root_password }}"
   become: yes
   vars:
     ansible_docker_use_system_connection: true
     docker_host: "unix:///var/run/docker.sock"
-
 - name: deploy gitlab configuration
   template: src=gitlab.rb.j2 dest="/etc/docker/gitlab/config/gitlab.rb" owner=root group=root mode=0644
