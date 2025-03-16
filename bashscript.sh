@@ -2,7 +2,7 @@
 
 # Настройки GitLab
 GITLAB_URL="https://gitlab.nez.lcl"
-API_TOKEN="glft-N-FHf6UBtSTsHhzCyzqT"
+API_TOKEN="${API_TOKEN}" #Токен в переменной окружения
 
 # Запрос данных о пользователе из консоли
 echo "Введите данные для нового пользователя:"
