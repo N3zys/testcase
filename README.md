@@ -18,3 +18,5 @@ ansible-playbook -i ./hosts ./docker_install.yml --ask-pass --limit remote
 репозиторий с gitlab был подключен к VS code с терминалом git-bash
 
 ![image](./images/2.png)
+
+![image](./images/site.png)
