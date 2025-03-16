@@ -1,0 +1,41 @@
+stages:
+  - backup
+  - deploy
+  - test
+
+variables:
+  # Параметры для работы
+  WEB_ROOT: "/home/gitlab-runner/site"  # Локальный путь к директории ./html/site
+  BACKUP_DIR: "/home/gitlab-runner/backups"        # Локальная директория для бекапов
+  CONTAINER_NAME: "nginx-country"         # Имя контейнера Nginx
+
+backup:
+  stage: backup
+  script:
+    - echo "Creating backup of current site..."
+    - mkdir -p $BACKUP_DIR
+    - cp -r $WEB_ROOT $BACKUP_DIR/backup-$(date +%Y%m%d%H%M%S)
+    - echo "Backup completed successfully."
+  only:
+    - master
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying new version of the site..."
+    - cp -r ./* $WEB_ROOT
+    - ls -l $WEB_ROOT
+    - docker exec $CONTAINER_NAME nginx -s reload
+    #- docker restart $CONTAINER_NAME  # Перезапуск контейнера
+    - echo "Deployment completed successfully."
+  only:
+    - master
+
+test:
+  stage: test
+  script:
+    - echo "Testing the deployed site..."
+    - curl --fail --silent --show-error http://127.0.0.1:8080 || (echo "Test failed!" && exit 1)
+    - echo "Site is accessible and working correctly."
+  only:
+    - master
