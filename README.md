@@ -1,6 +1,8 @@
 # testcase
 Тестовое задание №1
+
 Команда для запуска плейбука:
+
 ansible-playbook -i ./hosts ./docker_install.yml --ask-pass --limit remote
 
 Контейнер с gitlab запущен на виртуалке homelab1:
